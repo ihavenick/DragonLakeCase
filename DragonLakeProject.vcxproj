@@ -20,16 +20,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Class\Ball\Ball.cpp" />
+    <ClCompile Include="Class\Block\Block.cpp" />
     <ClCompile Include="Class\Core\BaseActor.cpp" />
+    <ClCompile Include="Class\Core\GameInstance.cpp" />
     <ClCompile Include="Class\Core\Input.cpp" />
+    <ClCompile Include="Class\Core\ObjectPooler.cpp" />
     <ClCompile Include="Class\Player\Player.cpp" />
     <ClCompile Include="game.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class\Ball\Ball.h" />
+    <ClInclude Include="Class\Block\Block.h" />
     <ClInclude Include="Class\Core\BaseActor.h" />
     <ClInclude Include="Class\Core\Framework.h" />
+    <ClInclude Include="Class\Core\GameInstance.h" />
     <ClInclude Include="Class\Core\Input.h" />
+    <ClInclude Include="Class\Core\ObjectPooler.h" />
     <ClInclude Include="Class\Player\Player.h" />
     <ClInclude Include="game.h" />
   </ItemGroup>

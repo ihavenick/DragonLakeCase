@@ -17,12 +17,11 @@ public:
     void onKeyPressed(FRKey k) override;
     void onKeyReleased(FRKey k) override;
     const char* GetTitle() override;
-
-
-    static void getSpriteSizeInFramework(Sprite* sprite, int width, int height);
-
-
+    
+    static void getSpriteSizeInFramework(Sprite* sprite, int& width, int& height);
+    static void setSpriteSizeInFramework(Sprite* sprite, int width, int height);
     static void destroySpriteInFramework(Sprite* sprite);
-
+    static void getScreenSizeFromFramework(int& w, int& h);
     static void drawSpriteInFramework(Sprite* sprite, int x_axis, int y_axis);
+    static Sprite* createSpriteInFramework(const char* path);
 };

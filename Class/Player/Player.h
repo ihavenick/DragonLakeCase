@@ -12,9 +12,10 @@ private:
 
 public:
 
-    Player(Sprite* player_sprite, int x_axis, int y_axis, bool tickEnabled);
+    Player( int x_axis, int y_axis, bool tickEnabled);
 
     virtual void tick() override;
     
     void moveInput(int xAxis);
+    void init(Sprite* test);
 };

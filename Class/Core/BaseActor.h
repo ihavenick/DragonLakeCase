@@ -11,9 +11,16 @@ protected:
     bool tickEnabled_ = false;
     int x_axis_ = 0;
     int y_axis_ = 0;
+    int tag_;
 public:
+    static BaseActor* create(int);
+
+    virtual Sprite* getSprite();
+    virtual bool init();
+    virtual void reset();
     void drawActor() const;
-    BaseActor(Sprite* actor_sprite, int x_axis, int y_axis, bool tickEnabled);
+    int getTag();
+    BaseActor(int x_axis, int y_axis, bool tickEnabled);
     virtual void tick();
     virtual ~BaseActor();
     bool doCollideWith(const BaseActor* base_actor) const;

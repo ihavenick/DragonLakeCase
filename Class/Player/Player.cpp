@@ -2,7 +2,7 @@
 
 #include "../Core/Input.h"
 
-Player::Player(Sprite* player_sprite, int x_axis, int y_axis, bool tickEnabled = true): BaseActor(player_sprite,x_axis,y_axis,tickEnabled)
+Player::Player( int x_axis, int y_axis, bool tickEnabled = true): BaseActor(x_axis,y_axis,tickEnabled)
 {
 }
 
@@ -23,6 +23,11 @@ void Player::tick()
 void Player::moveInput(int xAxis)
 {
     x_axis_ += xAxis;
+}
+
+void Player::init(Sprite* test)
+{
+    actor_sprite_ = test;
 }
 
 
