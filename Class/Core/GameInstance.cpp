@@ -87,21 +87,43 @@ void GameInstance::SpawnBall()
     tickActors_.push_back(_ball);
 }
 
+void GameInstance::ballOutofScreen()
+{
+    if(playerLives_ > 0)
+    {
+         _ball->reset(_player->getXAxis(), _player->getYAxis() - 10);
+        playerLives_--;
+    }
+    else
+    {
+        if(_gameOver)
+            return;
+        
+        _gameOver=true;
+       tickActors_.empty();
+        _gameOverActor = BaseActor::create(4);
+    }
+}
+
 void GameInstance::tick()
 {
-    if(!tickActors_.empty())
+    if(_gameOver)
+    {
+        if(_gameOverActor)
+        _gameOverActor->drawActor();
+    }
+    else if(!tickActors_.empty())
     {
         for(const auto actor : tickActors_)
         {
             actor->tick();
 
-            if(actor->getTag() != 3 && _ball)
+            if(actor->getTag() != 3 && _ball && _ball != actor)
             {
-                 if (actor->doCollideWith(_ball))
-                 {
-                     tickActors_.remove(_ball);
-                     delete _ball;
-                 }
+                if (actor->doCollideWith(_ball))
+                {
+                    _ball->changeDirection();
+                }
             }
         }
     }

@@ -15,7 +15,8 @@ public:
     Player( int x_axis, int y_axis, bool tickEnabled);
 
     virtual void tick() override;
-    
+    void checkInBounds();
+
     void moveInput(int xAxis);
     void init(Sprite* test);
 };

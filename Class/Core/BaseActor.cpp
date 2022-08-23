@@ -8,7 +8,7 @@
 
 void BaseActor::drawActor() const
 {
-    if(actor_sprite_)
+    if(actor_sprite_!=nullptr)
     MyFramework::drawSpriteInFramework(actor_sprite_, x_axis_, y_axis_);
 }
 
@@ -79,9 +79,12 @@ BaseActor* BaseActor::create(int atag)
         return e;
     }
 
-    if(atag==3)
+    if(atag==4)
     {
-        
+        int w,h;
+        MyFramework::getScreenSizeFromFramework(w,h);
+        const auto gameOver = MyFramework::createSpriteInFramework("data/gameover.png");
+        MyFramework::drawSpriteInFramework(gameOver, w/2, h/2);
     }
    // const auto b = new Buff();
   //  b->init();
