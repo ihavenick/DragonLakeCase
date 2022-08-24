@@ -47,8 +47,14 @@ void MyFramework::onMouseMove(int x, int y, int xrelative, int yrelative)
 
 void MyFramework::onMouseButtonClick(FRMouseButton button, bool isReleased)
 {
-    if(!isReleased)
-        GameInstance::getInstance()->SpawnBall();
+    auto game = GameInstance::getInstance();
+    if(!isReleased && !game->getBall())
+        game->SpawnBall(false);
+    else
+    {
+        game->SpawnBall(true);
+    }
+
     
 }
 

@@ -16,15 +16,27 @@ ObjectPooler* ObjectPooler::getInstance()
 void ObjectPooler::reset()
 {
     _blockList.clear();
+    _ballList.clear();
+    _buffList.clear();
 }
 
 
 BaseActor* ObjectPooler::getAgent(int atag)
 {
     if ((atag == 1 && _buffList.empty()) 
-            || (atag == 0 && _blockList.empty()))
+            || (atag == 0 && _blockList.empty())
+            || (atag == 2 && _ballList.empty()) ) 
     {
         return BaseActor::create(atag);
+    }
+
+    if (atag == 2) 
+    {
+       
+        BaseActor* resource = _ballList.front();
+        _ballList.pop_front();
+       
+        return resource;
     }
     
     if (atag == 1) 
@@ -50,10 +62,16 @@ void ObjectPooler::returnAgent(BaseActor* object)
     if (object->getTag() == 1) 
     {
         _buffList.push_back(object);
+        object->reset();
     }
     else if (object->getTag() == 0)
     {
         _blockList.push_back(object);
+        object->reset();
+    }
+    else
+    {
+        _ballList.push_back(object);
         object->reset();
     }
     

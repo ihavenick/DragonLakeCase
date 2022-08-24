@@ -17,4 +17,5 @@ private:
     static ObjectPooler* _Instnce;
     std::list<BaseActor*> _blockList;
     std::list<BaseActor*> _buffList;
+    std::list<BaseActor*> _ballList;
 };

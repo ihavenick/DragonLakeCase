@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Class\Ball\Ball.cpp" />
     <ClCompile Include="Class\Block\Block.cpp" />
+    <ClCompile Include="Class\Buff\Buff.cpp" />
     <ClCompile Include="Class\Core\BaseActor.cpp" />
     <ClCompile Include="Class\Core\GameInstance.cpp" />
     <ClCompile Include="Class\Core\Input.cpp" />
@@ -31,6 +32,7 @@
   <ItemGroup>
     <ClInclude Include="Class\Ball\Ball.h" />
     <ClInclude Include="Class\Block\Block.h" />
+    <ClInclude Include="Class\Buff\Buff.h" />
     <ClInclude Include="Class\Core\BaseActor.h" />
     <ClInclude Include="Class\Core\Framework.h" />
     <ClInclude Include="Class\Core\GameInstance.h" />

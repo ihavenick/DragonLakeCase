@@ -26,4 +26,5 @@ public:
     bool doCollideWith(const BaseActor* base_actor) const;
     int getXAxis() const;
     int getYAxis() const;
+    virtual void Collided();
 };
