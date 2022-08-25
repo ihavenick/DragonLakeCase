@@ -13,9 +13,9 @@ Input* input_ = Input::instance();
 
 void MyFramework::PreInit(int& width, int& height, bool& fullscreen)
 {
-    width = 800;
-    height = 600;
-    fullscreen = false;
+    width = screenWidth;
+    height = screenHeight;
+    fullscreen = isFullscreen;
 }
 
 bool MyFramework::Init()
@@ -81,6 +81,13 @@ const char* MyFramework::GetTitle()
     return "Arcanoid";
 }
 
+void MyFramework::setWindowParameters(int witdh, int height, bool fullscreen)
+{
+    screenHeight = height;
+    screenWidth = witdh;
+    isFullscreen = fullscreen;
+}
+
 void MyFramework::getSpriteSizeInFramework(Sprite* sprite,  int& width, int &height)
 {
     getSpriteSize(sprite, width, height);
@@ -113,5 +120,35 @@ Sprite* MyFramework::createSpriteInFramework(const char* path)
 
 int main(int argc, char* argv[])
 {
-    return run(new MyFramework);
+    const auto Framework = new MyFramework;
+    
+    //get window size from arguments -width, -height, -fullscreen
+    if(argc > 1)
+    {
+        int width = 800;
+        int height = 600;
+        bool fullscreen = false;
+        for(int i = 1; i < argc; i++)
+        {
+            if(strcmp(argv[i], "-width") == 0)
+            {
+                width = atoi(argv[i+1]);
+                printf("%d",width);
+                i++;
+            }
+            else if(strcmp(argv[i], "-height") == 0)
+            {
+                height = atoi(argv[i+1]);
+                i++;
+            }
+            else if(strcmp(argv[i], "-fullscreen") == 0)
+            {
+                fullscreen = true;
+            }
+        }
+
+        Framework->setWindowParameters(width, height, fullscreen);
+    }
+    
+    return run(Framework);
 }

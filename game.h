@@ -8,6 +8,9 @@ class MyFramework : public Framework
 
 private:
     int mouseX = 0;
+    int screenWidth = 800;
+    int screenHeight = 600;
+    bool isFullscreen = false;
 
 public:
     
@@ -20,7 +23,8 @@ public:
     void onKeyPressed(FRKey k) override;
     void onKeyReleased(FRKey k) override;
     const char* GetTitle() override;
-    
+    void setWindowParameters(int width, int height, bool fullscreen);
+
     static void getSpriteSizeInFramework(Sprite* sprite, int& width, int& height);
     static void setSpriteSizeInFramework(Sprite* sprite, int width, int height);
     static void destroySpriteInFramework(Sprite* sprite);

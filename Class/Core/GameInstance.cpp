@@ -29,22 +29,24 @@ void GameInstance::SpawnBlocks()
 {
     int visibleSizeWidth, visibleSizeHeight;
     MyFramework::getScreenSizeFromFramework(visibleSizeWidth, visibleSizeHeight);
-    int originY = 50;
+    
 
     //creating block for getting its size. yeah its not great way but it makes it %100 accurate :D
     const auto block = new Block(0, 0, true);
-
-    const auto marginx = 50.f;
+    
     int blockWidth = 0;
-    int unnecessary = 0;
-    MyFramework::getSpriteSizeInFramework(block->getSprite(), blockWidth, unnecessary);
+    int blockHeight = 0;
+    int originY = 50;
+    const auto marginx = 50.f;
+    MyFramework::getSpriteSizeInFramework(block->getSprite(), blockWidth, blockHeight);
 
 
     const float deltaValue = visibleSizeWidth - marginx / 1.5f;
     const int colonBlockCount = (deltaValue / blockWidth + 1) / .4f;
+    const int rowBlockCount = (visibleSizeHeight - originY) / blockHeight;
 
     int BlockCount = 0;
-    for (int j = 0; j < colonBlockCount; j++)
+    for (int j = 0; j < rowBlockCount; j++)
         for (int i = 0; i < colonBlockCount; i++)
         {
             const auto block = dynamic_cast<Block*>(ObjectPooler::getInstance()->getAgent(0));
@@ -53,7 +55,7 @@ void GameInstance::SpawnBlocks()
                 BlockCount++;
                 (block->getIsPowered() ? redblockCount_ : weakBlockCount_)++;
 
-                block->setPosition((visibleSizeWidth / 4) + (visibleSizeWidth - deltaValue) + (marginx + 50) * i,
+                block->setPosition((visibleSizeWidth / 10) + (visibleSizeWidth - deltaValue) + (marginx + 50) * i,
                                    originY + 50 * j);
 
                 this->tickActors_.push_back(block);
