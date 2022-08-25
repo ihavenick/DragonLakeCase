@@ -76,70 +76,9 @@ void Ball::changeDirection(BaseActor* actor)
    {
        x_speed_*=-1;
    }
-
-    
-    
-    // if(x_axis_<actor->getXAxis())
-    // {
-    //     x_speed_*=-1;
-    // }
-    // if(x_axis_>actor->getXAxis()+otherActorWidth)
-    // {
-    //     x_speed_*=-1;
-    // }
-    //
-    //
-    //
-    // if(y_axis_ < actor->getYAxis())
-    // {
-    //     y_speed_*=-1;
-    // }
-    //
-    //
-    // if(y_axis_ > actor->getYAxis()+otherActorHeight)
-    // {
-    //     y_speed_ *= -1;
-    //
-    //     if (x_axis_ < actor->getXAxis() + otherActorWidth)
-    //     {
-    //         x_speed_ *= -1;
-    //     }
-    // }
-    //
-    //
-    //  if(y_axis_ < actor->getYAxis()+otherActorHeight && y_axis_ > actor->getYAxis())
-    //  {
-    //      y_speed_*=-1;
-    //  }
-    //  
-     
-   
-
-   
-   
-    
-    
-
-
-    
-    // if(y_axis_<actor->getYAxis()+otherActorHeight || y_axis_>actor->getYAxis())
-    // {
-    //     y_speed_*=-1;
-    // }
-
-    // if(actor->getXAxis()<x_axis_ || actor->getXAxis()>x_axis_)
-    //     y_speed_*=-1;
-    //
-    // if(actor->getYAxis()<y_axis_ || actor->getYAxis()>y_axis_)
-    //     x_speed_*=-1;
-   
-
-    
-    //  x_speed_=-x_speed_;
-   // y_speed_=-y_speed_;
 }
 
-void Ball::reset(int x, int y)
+void Ball::reset(int x, int y)  //reset ball
 {
     x_axis_=x;
     y_axis_=y;

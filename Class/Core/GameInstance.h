@@ -31,7 +31,7 @@ public:
     void createPlayer();
     void beginPlay();
     bool CanAbleToSpawnRedBlocks() const;
-    void SpawnBall(bool cond);
+    void SpawnBall(int x, bool isBuff);
     void ballOutofScreen(Ball* ball);
     void reset();
     static GameInstance* getInstance();

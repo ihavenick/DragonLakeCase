@@ -38,20 +38,19 @@ bool MyFramework::Tick()
 
 void MyFramework::onMouseMove(int x, int y, int xrelative, int yrelative)
 {
+    mouseX = x;
 }
 
 void MyFramework::onMouseButtonClick(FRMouseButton button, bool isReleased)
 {
     const auto game = GameInstance::getInstance();
+    
     if(!isReleased && !game->getBall())
     {
-        game->SpawnBall(false);
+        game->SpawnBall(mouseX, false);
         
     }
-        
     
-
-
     if(!isReleased && game->getGameOver())
     {
         game->reset();

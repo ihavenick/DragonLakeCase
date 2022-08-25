@@ -21,16 +21,16 @@ void Buff::tick()
     MyFramework::getScreenSizeFromFramework(w, h);
 
 
-    auto game = GameInstance::getInstance();
+    const auto game = GameInstance::getInstance();
 
     if(doCollideWith(game->getPlayer()))
     {
-        if(isPositive)
-            game->SpawnBall(true);
+        if(isPositive)                      //positive buff
+            game->SpawnBall(1, true);     // split balls
         else
         {
-            int w, h;
-            MyFramework::getScreenSizeFromFramework(w,h);
+            int w, h; // width and height of the screen
+            MyFramework::getScreenSizeFromFramework(w,h);        //if negative buff, then teleport to ball half of screen
             
             game->getBall()->setPosition(w,h / 2);
         }
@@ -39,7 +39,7 @@ void Buff::tick()
         game->removeFromScreen(this);
     }
     
-    if (y_axis_ > h)
+    if (y_axis_ > h)   // if out of screen , remove buff
     {
        game->removeFromScreen(this);
     }

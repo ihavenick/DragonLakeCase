@@ -34,7 +34,7 @@ void GameInstance::SpawnBlocks()
     //creating block for getting its size. yeah its not great way but it makes it %100 accurate :D
     const auto block = new Block(0, 0, true);
 
-    const auto marginx = -50.f;
+    const auto marginx = 50.f;
     int blockWidth = 0;
     int unnecessary = 0;
     MyFramework::getSpriteSizeInFramework(block->getSprite(), blockWidth, unnecessary);
@@ -99,7 +99,7 @@ bool GameInstance::CanAbleToSpawnRedBlocks() const
     return  !(redblockCount_ >= redBlockLimit);
 }
 
-void GameInstance::SpawnBall(bool isBuff)
+void GameInstance::SpawnBall(int x,bool isBuff)
 {
     if(isBuff)
     {
@@ -129,8 +129,11 @@ void GameInstance::SpawnBall(bool isBuff)
     }
     else
     {
-        const auto _ball = new Ball(_player->getXAxis(), _player->getYAxis() - 20,true);
-        
+        const int direction = x > _player->getXAxis() ? 1 : -1;
+       int pSW, pSH;
+        MyFramework::getSpriteSizeInFramework( _player->getSprite(), pSW,pSH);
+        const auto _ball = new Ball(_player->getXAxis() + pSW/2, _player->getYAxis() - 20,true);
+        _ball->x_speed_ = direction;
         tickActors_.push_back(_ball);
         ballList_.push_back(_ball);
     }
@@ -145,10 +148,7 @@ void GameInstance::ballOutofScreen(Ball* ball)
         ballList_.remove(ball);
         tickActors_.remove(ball);
         ObjectPooler::getInstance()->returnAgent(ball);
-        
-        
     }
-    
     
     if(playerLives_ > 0 && ballList_.empty())
     {

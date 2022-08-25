@@ -14,7 +14,7 @@ public:
     void reset() override;
     void tick() override;
     void Collided() override;
-    bool getIsPowered();
+    bool getIsPowered() const;
 
     void setPosition(int x, int y);
 };

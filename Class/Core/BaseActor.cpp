@@ -8,7 +8,7 @@
 #include "../Buff//Buff.h"
 #include "../Ball//Ball.h"
 
-void BaseActor::drawActor() const
+void BaseActor::drawActor() const                             //draw logic for framework
 {
     if(actor_sprite_!=nullptr)
     MyFramework::drawSpriteInFramework(actor_sprite_, x_axis_, y_axis_);
@@ -16,12 +16,12 @@ void BaseActor::drawActor() const
 
 
 
-int BaseActor::getTag()
+int BaseActor::getTag()    //get tag for logics
 {
     return tag_;
 }
 
-BaseActor::BaseActor( int x_axis, int y_axis, bool tickEnabled)
+BaseActor::BaseActor( int x_axis, int y_axis, bool tickEnabled)   
 {
     this->x_axis_ = x_axis;
     this->y_axis_ = y_axis;
@@ -84,7 +84,7 @@ BaseActor* BaseActor::create(int atag)
 {
     int sW, sH;  //sprite width and height
     
-    if(atag==0)
+    if(atag==0)   //block
     {
         //random for create powered blocks or weaker
         const int isPowerFull = rand() % 2; //i hate this randomers. gives same numbers generally
@@ -94,7 +94,7 @@ BaseActor* BaseActor::create(int atag)
         MyFramework::setSpriteSizeInFramework(blck->getSprite(),sW/7,sH/10);
         return blck;
     }
-    if(atag==1)
+    if(atag==1)    //buff
     {
         const int isPositive = rand() % 2; 
         const auto e = new Buff(1,1,true);
@@ -104,7 +104,7 @@ BaseActor* BaseActor::create(int atag)
         return e;
     }
 
-    if(atag==2)
+    if(atag==2) //ball
     {
         auto ball = GameInstance::getInstance()->getBall();
         const auto bll = new Ball(ball->getXAxis(), ball->getYAxis(),true);
@@ -113,7 +113,7 @@ BaseActor* BaseActor::create(int atag)
         return bll;
     }
 
-    if(atag==4 || atag == 5)
+    if(atag==4 || atag == 5) //game over and win screens
     {
         int w,h; // screen width and heifht
         MyFramework::getScreenSizeFromFramework(w,h);

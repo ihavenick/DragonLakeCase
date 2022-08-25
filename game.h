@@ -6,6 +6,9 @@
 class MyFramework : public Framework
 {
 
+private:
+    int mouseX = 0;
+
 public:
     
     void PreInit(int& width, int& height, bool& fullscreen) override;
