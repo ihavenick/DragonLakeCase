@@ -9,6 +9,7 @@
 Buff::Buff(int x_axis, int y_axis, bool tickEnabled): BaseActor(x_axis, y_axis, tickEnabled)
 {
     this->actor_sprite_= MyFramework::createSpriteInFramework("data/59-Breakout-Tiles.png");
+    this->tag_ = 2;
 }
 
 void Buff::tick()

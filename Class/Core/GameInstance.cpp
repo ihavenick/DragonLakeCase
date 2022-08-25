@@ -29,37 +29,37 @@ void GameInstance::SpawnBlocks()
 {
     int visibleSizeWidth, visibleSizeHeight;
     MyFramework::getScreenSizeFromFramework(visibleSizeWidth, visibleSizeHeight);
-    int originY = 0;
+    int originY = 50;
 
     //creating block for getting its size. yeah its not great way but it makes it %100 accurate :D
     const auto block = new Block(0, 0, true);
 
-    const auto marginx = 30.f;
+    const auto marginx = -50.f;
     int blockWidth = 0;
     int unnecessary = 0;
     MyFramework::getSpriteSizeInFramework(block->getSprite(), blockWidth, unnecessary);
 
 
     const float deltaValue = visibleSizeWidth - marginx / 1.5f;
-    const int colonBlockCount = (deltaValue / blockWidth + 1) / 0.4f;
+    const int colonBlockCount = (deltaValue / blockWidth + 1) / .4f;
 
     int BlockCount = 0;
     for (int j = 0; j < colonBlockCount; j++)
         for (int i = 0; i < colonBlockCount; i++)
         {
             const auto block = dynamic_cast<Block*>(ObjectPooler::getInstance()->getAgent(0));
-            if (block == nullptr)
-                printf("error getting block from pool");
-            else
+            if (block != nullptr)
             {
                 BlockCount++;
                 (block->getIsPowered() ? redblockCount_ : weakBlockCount_)++;
-                
+
                 block->setPosition((visibleSizeWidth / 4) + (visibleSizeWidth - deltaValue) + (marginx + 50) * i,
                                    originY + 50 * j);
 
                 this->tickActors_.push_back(block);
             }
+            else
+                printf("error getting block from pool");
         }
 
     
@@ -94,7 +94,7 @@ void GameInstance::beginPlay()
     randomBuffTime = rand() % 60 + 1;
 }
 
-bool GameInstance::CanAbleToSpawnRedBlocks()
+bool GameInstance::CanAbleToSpawnRedBlocks() const
 {
     return  !(redblockCount_ >= redBlockLimit);
 }
@@ -129,7 +129,7 @@ void GameInstance::SpawnBall(bool isBuff)
     }
     else
     {
-        auto _ball = new Ball(_player->getXAxis(), _player->getYAxis() - 20,true);
+        const auto _ball = new Ball(_player->getXAxis(), _player->getYAxis() - 20,true);
         
         tickActors_.push_back(_ball);
         ballList_.push_back(_ball);
@@ -146,34 +146,56 @@ void GameInstance::ballOutofScreen(Ball* ball)
         tickActors_.remove(ball);
         ObjectPooler::getInstance()->returnAgent(ball);
         
-        return;
-    }
-  
-
-    
-    if(playerLives_ > 0)
-    {
         
+    }
+    
+    
+    if(playerLives_ > 0 && ballList_.empty())
+    {
+        printf("%d lives left \n",playerLives_);
         playerLives_--;
     }
-    else
+    else if (playerLives_ == 0)
     {
         if(_gameOver)
             return;
         
         _gameOver=true;
-       tickActors_.empty();
+       tickActors_.clear();
         _gameOverActor = BaseActor::create(4);
+        
     }
+}
+
+void GameInstance::reset()
+{
+    _gameOver = false;
+    _gameOverActor = nullptr;
+    ObjectPooler::getInstance()->reset();
+    playerLives_ = 5;
+    weakBlockCount_ = 0;
+    redblockCount_ = 0;
+    delete _player;
+    ballList_.clear();
+    tickActors_.clear();
+    SpawnBlocks();
+    createPlayer();
+    tickActors_.push_back(_player);
+    _startTime = std::chrono::system_clock::now();
+    randomBuffTime = rand() % 60 + 1;
 }
 
 void GameInstance::tick()
 {
     if(_gameOver)
     {
-        if(_gameOverActor)
+        if (_gameOverActor)
+        {
             _gameOverActor->drawActor();
+        }
     }
+
+
     else if(!tickActors_.empty())
     {
         const auto cacheList = tickActors_;
@@ -181,10 +203,17 @@ void GameInstance::tick()
         
         for(const auto actor : cacheList)
         {
+            if(!actor || !actor->getSprite())
+                return;
+            
             actor->tick();
 
             for(const auto ball : cacheBallList)
             {
+                if(actor->getTag() == 2)
+                {
+                    continue;;
+                }
                 if(actor != ball && actor->getTag() != 3 && actor->doCollideWith(ball))
                 {
                     ball->changeDirection(actor);
@@ -235,9 +264,9 @@ void GameInstance::setBlockCount(int i, bool is_powerfull)
     {
         //win
         printf("you win");
-        BaseActor* winActor = BaseActor::create(5);
-        
-        tickActors_.push_back(winActor);
+        _gameOverActor = BaseActor::create(5);
+        _gameOver = true ;
+        tickActors_.push_back(_gameOverActor);
     }
 }
 
@@ -251,4 +280,9 @@ Ball* GameInstance::getBall() const
     if(!ballList_.empty())
         return ballList_.front();
     return nullptr;
+}
+
+bool GameInstance::getGameOver() const
+{
+    return _gameOver;
 }

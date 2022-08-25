@@ -5,15 +5,15 @@
 
 Ball::Ball(int x_axis, int y_axis, bool tickEnabled): BaseActor(x_axis, y_axis, tickEnabled)
 {
-    this->actor_sprite_= MyFramework::createSpriteInFramework("data/64-Breakout-Tiles.png");
-    this->tag_ = 3;
+    this->actor_sprite_= MyFramework::createSpriteInFramework("data/64-Breakout-Tiles.png");  //default sprite
+    this->tag_ = 3;                                                                                //trying to tag the ball
 }
 
 void Ball::tick()
 {
     BaseActor::tick();
 
-    int w, h;
+    int w, h;  //width and height of the screen
     MyFramework::getScreenSizeFromFramework(w, h);
     
     x_axis_+=x_speed_;
@@ -78,17 +78,6 @@ void Ball::changeDirection(BaseActor* actor)
    }
 
     
-   
-    
-        
-
-
-
-
-
-
-
-
     
     // if(x_axis_<actor->getXAxis())
     // {

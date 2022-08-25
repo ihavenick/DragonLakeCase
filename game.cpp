@@ -2,13 +2,10 @@
 
 #include "Class/Core/Framework.h"
 #include "Class/Core/Input.h"
-
 #include "game.h"
-
-
 #include "Class/Ball/Ball.h"
 #include "Class/Core/GameInstance.h"
-#include "Class/Player/Player.h"
+
 
 Input* input_ = Input::instance();
 
@@ -23,8 +20,6 @@ void MyFramework::PreInit(int& width, int& height, bool& fullscreen)
 
 bool MyFramework::Init()
 {
-   
-   
     GameInstance::getInstance()->beginPlay();
     
     return true;
@@ -47,14 +42,20 @@ void MyFramework::onMouseMove(int x, int y, int xrelative, int yrelative)
 
 void MyFramework::onMouseButtonClick(FRMouseButton button, bool isReleased)
 {
-    auto game = GameInstance::getInstance();
+    const auto game = GameInstance::getInstance();
     if(!isReleased && !game->getBall())
-        game->SpawnBall(false);
-    else
     {
-        game->SpawnBall(true);
+        game->SpawnBall(false);
+        
     }
+        
+    
 
+
+    if(!isReleased && game->getGameOver())
+    {
+        game->reset();
+    }
     
 }
 

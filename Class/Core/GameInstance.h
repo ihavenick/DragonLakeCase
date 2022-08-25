@@ -15,7 +15,7 @@ private:
     std::list<BaseActor*> tickActors_;
     static GameInstance* _instance;
     Player* _player;
-    int playerLives_ = 5;
+    int playerLives_ = 1;
     bool _gameOver = false;
     BaseActor* _gameOverActor;
     std::chrono::time_point<std::chrono::system_clock> _startTime;
@@ -30,13 +30,15 @@ public:
     void SpawnBlocks();
     void createPlayer();
     void beginPlay();
-    bool CanAbleToSpawnRedBlocks();
+    bool CanAbleToSpawnRedBlocks() const;
     void SpawnBall(bool cond);
     void ballOutofScreen(Ball* ball);
+    void reset();
     static GameInstance* getInstance();
     void tick();
     void removeFromScreen(BaseActor* actor);
     void setBlockCount(int i, bool is_powerfull);
     int getWeakBlockCount() const;
     Ball* getBall() const;
+    bool getGameOver() const;
 };

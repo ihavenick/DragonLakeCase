@@ -44,8 +44,8 @@ BaseActor::~BaseActor()
 
 bool BaseActor::doCollideWith(const BaseActor* base_actor) const
 {
-    int width_ = 0;
-    int height_ = 0;
+    int width_ = 0;  // width of the actor
+    int height_ = 0; // height of the actor
     if (!actor_sprite_)
         return false;
 
@@ -82,22 +82,20 @@ void BaseActor::Collided()
 
 BaseActor* BaseActor::create(int atag)
 {
-    int sW, sH;
-    
+    int sW, sH;  //sprite width and height
     
     if(atag==0)
     {
-        //random for create powered enemies or weaker
+        //random for create powered blocks or weaker
         const int isPowerFull = rand() % 2; //i hate this randomers. gives same numbers generally
-        const auto e = new Block(50,50,true);
-        e->init(isPowerFull);
-        MyFramework::getSpriteSizeInFramework(e->getSprite(),sW,sH);
-        MyFramework::setSpriteSizeInFramework(e->getSprite(),sW/10,sH/10);
-        return e;
+        const auto blck = new Block(50,50,true);
+        blck->init(isPowerFull);
+        MyFramework::getSpriteSizeInFramework(blck->getSprite(),sW,sH);
+        MyFramework::setSpriteSizeInFramework(blck->getSprite(),sW/7,sH/10);
+        return blck;
     }
     if(atag==1)
     {
-        
         const int isPositive = rand() % 2; 
         const auto e = new Buff(1,1,true);
         e->init(isPositive);
@@ -109,24 +107,23 @@ BaseActor* BaseActor::create(int atag)
     if(atag==2)
     {
         auto ball = GameInstance::getInstance()->getBall();
+        const auto bll = new Ball(ball->getXAxis(), ball->getYAxis(),true);
+        bll->x_speed_ = ball->x_speed_ * -1;
         
-        const auto e = new Ball(ball->getXAxis(), ball->getYAxis(),true);
-
-        e->x_speed_ = ball->x_speed_ * -1;
-
-        
-        return e;
+        return bll;
     }
 
-    if(atag==4)
+    if(atag==4 || atag == 5)
     {
-        int w,h;
+        int w,h; // screen width and heifht
         MyFramework::getScreenSizeFromFramework(w,h);
-        const auto gameOver = MyFramework::createSpriteInFramework("data/gameover.png");
-        MyFramework::drawSpriteInFramework(gameOver, w/2, h/2);
+        const auto gameOverSprite = atag == 4 ? MyFramework::createSpriteInFramework("data/gameover.png") : MyFramework::createSpriteInFramework("data/youwin.png");
+        MyFramework::setSpriteSizeInFramework(gameOverSprite, w/2, h/2);
+        MyFramework::getSpriteSizeInFramework(gameOverSprite,sH,sW);
+        const auto gameOverActor = new BaseActor(w/2 - (sW /2),h/2 -(sH /2),false);
+        gameOverActor->actor_sprite_= gameOverSprite;
+        return gameOverActor;
     }
-  
-
    
 }
 
@@ -137,14 +134,6 @@ Sprite* BaseActor::getSprite()
 
 bool BaseActor::init()
 {
-   // visibleSize = Director::getInstance()->getVisibleSize();
-    // origin = Director::getInstance()->getVisibleOrigin();
-
-    //TODO test if this better here
-    // auto rectBody = cocos2d::PhysicsBody::createBox(this->getContentSize(), cocos2d::PHYSICSBODY_MATERIAL_DEFAULT);
-    // rectBody->setContactTestBitmask(true);
-    // this->setPhysicsBody(rectBody);
-
     return true;
 }
 

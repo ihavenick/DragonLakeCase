@@ -13,7 +13,7 @@ void Player::tick()
     
 
     const Input* inputInstance = Input::instance();
-    const bool leftPressed= inputInstance->getKeyPressed(true);
+    const bool leftPressed= inputInstance->getKeyPressed(true);           //for smooth movement i writed in tick to make continious movement
     const bool rightPressed = inputInstance->getKeyPressed(false);
 
     if(leftPressed && !rightPressed)
@@ -25,13 +25,13 @@ void Player::tick()
     
 }
 
-void Player::checkInBounds()
+void Player::checkInBounds() // dont let player go outside of screen
 {
 
-    int sW, sH;
+    int sW, sH; //sprite width and height
     MyFramework::getSpriteSizeInFramework(actor_sprite_,sW,sH);
     
-    int w, h;
+    int w, h; //window width and height
     MyFramework::getScreenSizeFromFramework(w, h);
     if (x_axis_ < 0)
         x_axis_ = 0;
@@ -39,12 +39,12 @@ void Player::checkInBounds()
         x_axis_ = w - sW - 1;
 }
 
-void Player::moveInput(int xAxis)
+void Player::moveInput(int xAxis) // move player by xAxis
 {
     x_axis_ += xAxis;
 }
 
-void Player::init(Sprite* test)
+void Player::init(Sprite* test) // init player
 {
     actor_sprite_ = test;
 }

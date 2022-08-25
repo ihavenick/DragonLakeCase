@@ -35,7 +35,7 @@ void Block::tick()
 
 void Block::Collided()
 {
-    auto game = GameInstance::getInstance();
+    const auto game = GameInstance::getInstance();
     if (isPowerfull_ && game->getWeakBlockCount() > 0)
         return;
 
@@ -51,7 +51,7 @@ void Block::Collided()
                                       : MyFramework::createSpriteInFramework("data/02-Breakout-Tiles.png");
 
             MyFramework::getSpriteSizeInFramework(actor_sprite_,sW,sH);
-            MyFramework::setSpriteSizeInFramework(actor_sprite_,sW/10,sH/10);
+            MyFramework::setSpriteSizeInFramework(actor_sprite_,sW/7,sH/10);
         }
     }
     else

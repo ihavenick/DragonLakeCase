@@ -15,7 +15,7 @@ ObjectPooler* ObjectPooler::getInstance()
 
 void ObjectPooler::reset()
 {
-    _blockList.clear();
+    _blockList.clear();            // clear lists (do it better if we dont ?)
     _ballList.clear();
     _buffList.clear();
 }
@@ -27,16 +27,16 @@ BaseActor* ObjectPooler::getAgent(int atag)
             || (atag == 0 && _blockList.empty())
             || (atag == 2 && _ballList.empty()) ) 
     {
-        return BaseActor::create(atag);
+        return BaseActor::create(atag); // create a new one if there is no available one
     }
 
-    if (atag == 2) 
+    if (atag == 2)                                // if we have in pool
     {
        
-        BaseActor* resource = _ballList.front();
-        _ballList.pop_front();
+        BaseActor* resource = _ballList.front();  // get the first one in the list
+        _ballList.pop_front();                    // remove it from the list
        
-        return resource;
+        return resource;                        // return it
     }
     
     if (atag == 1) 
@@ -59,7 +59,7 @@ BaseActor* ObjectPooler::getAgent(int atag)
 
 void ObjectPooler::returnAgent(BaseActor* object)
 {
-    if (object->getTag() == 1) 
+    if (object->getTag() == 1)                // add to pool if we dont need now but will need it later
     {
         _buffList.push_back(object);
         object->reset();
